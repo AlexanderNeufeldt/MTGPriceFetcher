@@ -1,0 +1,23 @@
+{
+  "name": "mtgpricefetcher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "e2e",
+    "cypress",
+    "googlesheetsapi"
+  ],
+  "author": "Alexander Neufeldt",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.7.1"
+  },
+  "dependencies": {
+    "googleapis": "^134.0.0",
+    "http-server": "^14.1.1"
+  }
+}
