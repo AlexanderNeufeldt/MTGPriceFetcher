@@ -6,6 +6,8 @@ const { google } = require('googleapis');
 module.exports = defineConfig({
   // setupNodeEvents can be defined in either the e2e or component configuration
   
+  projectId: "a8zfd6",  //cypress cloud uses this to communicate with the project
+  
   e2e: {
     setupNodeEvents(on, config) {
       on('task', {    
