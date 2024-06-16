@@ -6,7 +6,7 @@ describe('template spec', () => {
 */
 
 
-  it('PRINTS STUDENT MAJORS', () => {
+  it('PRINTS CARD QUANTITY & NAME', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
 
@@ -19,10 +19,10 @@ describe('template spec', () => {
       if (rows.length === 0) {    //if the fetched range has no data return this error
           cy.log('No data found.');  // prints to console
       } else {   
-          cy.log('Name, Major:');  // prints to console
+          cy.log('Quantity, Card Name:');  // prints to console
           for (const row of rows) {  //otherwise iterates over the returned rows
               // Print columns A and E, which correspond to indices 0 and 4.
-              cy.log(`${row[0]}, ${row[4]}`);   //prints the first and fifth column
+              cy.log(`${row[0]}, ${row[1]}`);   //prints the first and second row
           }
       }
     })

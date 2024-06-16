@@ -20,7 +20,7 @@ module.exports = defineConfig({
           const res = await sheets.spreadsheets.values.get(   //gets the result of a values.get call and assigns those results to res
               {
                   spreadsheetId: params.spreadSheetID,  //put in spreadsheet ID aka what you're targeting
-                  range: 'Class Data!A2:E',
+                  range: 'MainSheet!A2:C99',  
               }
           );
           return res;  // returns the range results to const res
