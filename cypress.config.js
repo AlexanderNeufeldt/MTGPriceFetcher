@@ -18,9 +18,10 @@ module.exports = defineConfig({
           });
 
           const res = await sheets.spreadsheets.values.get(   //gets the result of a values.get call and assigns those results to res
+          //info on .get  https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
               {
                   spreadsheetId: params.spreadSheetID,  //put in spreadsheet ID aka what you're targeting
-                  range: 'MainSheet!A2:C99',  
+                  range: params.range,  //lets the range be customized when the function is called
               }
           );
           return res;  // returns the range results to const res
