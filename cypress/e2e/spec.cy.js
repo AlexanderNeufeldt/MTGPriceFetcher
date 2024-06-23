@@ -40,16 +40,29 @@ describe('template spec', () => {
         const TargetCard = 	res.data.values;  //sets TargetCard to the function output, aka B13
 
         cy.visit('https://store.401games.ca/') // visit 401games
+        cy.wait(2000)
+        cy.log(`${TargetCard}`);  //prints card name in console
 
         cy.get('#isp_main_input') //get the search field 
-          .type(String(TargetCard))
+          .type(String(TargetCard))  //types the card we're looking for
         cy.get('#isp_main_search_button')  //find and click the search box
           .click()
-        cy.log(`${TargetCard}`);  //prints card name in console
-    
+        
+        cy.url().then(($url) => {  //have to use this because you can't assign any cy.commands to vars
+          const URL401games = $url;  //asigns current URL to const var
+          cy.log(`${URL401games}`);  //prints card name in console
+          cy.log(`${TargetCard}`);  //prints card name in console
+
+        })
+
+
     })
 
   })
+
+
+
+
 
   
 })
