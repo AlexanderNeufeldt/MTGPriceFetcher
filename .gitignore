@@ -1,2 +1,3 @@
 cypress.env.json
 client_secret*
+CREDENTIALS.json
