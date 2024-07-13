@@ -31,10 +31,10 @@ describe('template spec', () => {
 
   })
 
-  it ('FIND & SEARCH THE 13TH ENTRY', () => {
+  it ('Log URLs from 401g', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
-    const range = "MainSheet!B11:B26";  //sets the range param to a specific card
+    const range = "MainSheet!B4:B38";  //sets the range param to a specific card
     var values = [];  //
     
     cy.task('google', {apiKey: apiKey, spreadSheetID: spreadSheetID, range: range }, {log: false}).then((res) => {  
@@ -42,9 +42,8 @@ describe('template spec', () => {
       cy.wait(2000)
       
       for ( const TargetCard of res.data.values){  
-        
         cy.log(`${TargetCard}`);  //prints card name in console
-
+        
         cy.get('#isp_main_input') //get the search field 
           .clear()
           .type(String(TargetCard))  //types the card we're looking for
@@ -62,18 +61,64 @@ describe('template spec', () => {
 
     })
 
-    //write URL to sheet
-    //const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
-   // const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
-    const updaterange = "MainSheet!C11:C26";  //sets the range param to a specific card
+    const updaterange = "MainSheet!C4:C38";  //sets the range param to a specific card
+    //GoogleUpdate will the spreadsheet using var values from above
     cy.task('GoogleUpdate', { spreadSheetID: spreadSheetID, range: updaterange, values: values }, {log: false}).then((res) => {  
 
       cy.log('HHHEEELLLOOO WORLDDDDDDDDDDDDDDDDD')
   
       })
 
+  })
+
+  it.only ('Log URLs from FtF', () => {
+    const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
+    const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
+    const range = "MainSheet!B4:B38";  //sets the range param to a specific card
+    var values = [];  //
+    
+    cy.task('google', {apiKey: apiKey, spreadSheetID: spreadSheetID, range: range }, {log: false}).then((res) => {  
+      cy.visit('https://www.facetofacegames.com/') // visits site
+      cy.wait(2000)
+      
+      for ( const TargetCard of res.data.values){  
+        cy.log(`${TargetCard}`);  //prints card name in console
+        
+        //find the search bar and type in it
+        cy.visit('https://www.facetofacegames.com/')
+        cy.get('*[class^="hawk__searchBox__searchInput"]').eq(0)
+        //.clear()  //empties search bar so next searches run smoothly
+        .type(String(TargetCard))  //types the card we're looking for
+        //finds & clicks the search button
+        cy.get('*[class^="search-submit"]').eq(0)
+        .click()
+        
+        cy.wait(3000)
+        cy.url().then(($url) => {  //have to use this because you can't assign any cy.commands to vars
+          values.push([$url]);  //adds the urls to the let values array delcared above
+          cy.log(`${values}`);  //prints card name in console
+          cy.log(`${TargetCard}`);  //prints card name in console
+
+        })
+        cy.wait(9000)
+      }
+
+    })
+
+    const updaterange = "MainSheet!D4:D38";  //sets the range param to a specific card
+    //GoogleUpdate will the spreadsheet using var values from above
+    cy.task('GoogleUpdate', { spreadSheetID: spreadSheetID, range: updaterange, values: values }, {log: false}).then((res) => {  
+
+      cy.log('HHHEEELLLOOO WORLDDDDDDDDDDDDDDDDD')
+  
+      })
 
   })
+
+
+
+
+
 
   
 })
