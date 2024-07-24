@@ -11,7 +11,6 @@ describe('template spec', () => {
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
     const range = "MainSheet!A2:C22";  //sets the range param to mostly the whole sheet
 
-
     cy.task('google', {apiKey: apiKey, spreadSheetID: spreadSheetID, range: range}, {log: false}).then((res) => {  /*executes the google task function in 
     cypress.config.js. 
     cy.task('google').then((res) => {  /*executes the google task function in cypress.config.js. 

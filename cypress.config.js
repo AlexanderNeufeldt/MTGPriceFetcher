@@ -7,6 +7,8 @@ module.exports = defineConfig({
   // setupNodeEvents can be defined in either the e2e or component configuration
   
   projectId: "a8zfd6",  //cypress cloud uses this to communicate with the project
+
+  pageLoadTimeout: 30000,   //gives pages 30 seconds to load, needed occasionally for goldfish
   
   e2e: {
     setupNodeEvents(on, config) {
