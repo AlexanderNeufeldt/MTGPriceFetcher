@@ -8,7 +8,10 @@ module.exports = defineConfig({
   
   projectId: "a8zfd6",  //cypress cloud uses this to communicate with the project
 
-  pageLoadTimeout: 30000,   //gives pages 30 seconds to load, needed occasionally for goldfish
+  pageLoadTimeout: 110000,   //gives pages 30 seconds to load, needed occasionally for goldfish
+
+  numTestsKeptInMemory: 0,  //trying to reduce RAM crashes
+  experimentalMemoryManagement: true, //might make Chrome use less RAM
   
   e2e: {
     setupNodeEvents(on, config) {
