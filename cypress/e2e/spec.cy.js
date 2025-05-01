@@ -6,7 +6,7 @@ describe('template spec', () => {
 */
 
 const StartCell = 2;  //sheet starts at 2
-const EndCell = 19;
+const EndCell = 2;
 
   it ('PRINTS CARD QUANTITY & NAME', () => {
     
@@ -34,7 +34,7 @@ const EndCell = 19;
     
   })
 
-  it.only ('Log URLs from 401g', () => {
+  it ('Log URLs from 401g', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
     const range = "MainSheet!"  + "B" + StartCell + ":" + "D" + EndCell;    ;  //sets the range param to multiple columns
@@ -115,7 +115,7 @@ const EndCell = 19;
 
   })
 
-  it  ('Log URLs from FtF', () => {
+  it.only  ('Log URLs from FtF', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
     const range = "MainSheet!B" + StartCell + ":D" + EndCell;  //sets the range param to a specific card
@@ -142,26 +142,25 @@ const EndCell = 19;
         
         //find the search bar and type in it
         cy.visit('https://www.facetofacegames.com/')
-        cy.get('*[class^="hawk__searchBox__searchInput"]').eq(0)
-        //.clear()  //empties search bar so next searches run smoothly
+        cy.get('.bb-search-input > input')
         .type(String(TargetCard))  //types the card we're looking for
         //finds & clicks the search button
-        cy.get('*[class^="search-submit"]').eq(0)
+        cy.get('.bb-search-input > button')
         .click()
         
         cy.wait(3000)
         //click the first search result
-        cy.get('*[class^="hawk-results__item-image"]').eq(0)
+        cy.get(':nth-child(2) > .bb-card-img > a > img')
         .click()
 
         cy.wait(3000)
 
         //put the IF card name check here
-        cy.get('.productView-title').invoke("text").then((FTFCardName) => { 
+        cy.get('h1').invoke("text").then((FTFCardName) => {
         if (FTFCardName.includes(CardName)) {
           //if (FTFCardName.includes(TargetCard)) {
-          cy.get('.primary-price--withoutTax > .price').then(($span) => {  //have to use this because you can't assign any cy.commands to vars
-            values.prices.push([$span.text()]);  //adds the urls to the let values array delcared above
+            cy.get(':nth-child(1) > .f2f-fv--price > .price > .price__container > .price__regular > .price-item').then(($span) => {  //have to use this because you can't assign any cy.commands to vars
+            values.prices.push([$span.text().trim()]);  //adds the price to the let values array delcared above. trims empty spaces
             cy.log(`${values.prices}`);  //prints card price in console
 
           })
@@ -174,7 +173,7 @@ const EndCell = 19;
           })
         } else {
           //IF the found card does not contain the card name return NULL to google sheets
-          cy.get('.primary-price--withoutTax > .price').then(($span) => {  
+          cy.get(':nth-child(1) > .f2f-fv--price > .price > .price__container > .price__regular > .price-item').then(($span) => { 
             $span = "NULL";  //add NULL to price list to indicate the search was a whiff
             values.prices.push([$span]);  
           })

@@ -6,7 +6,7 @@ describe('template spec', () => {
 */
 
 const StartCell = 2;  //sheet starts at 2
-const EndCell = 8;
+const EndCell = 40;
 
 
   it.only  ('Log URLs from Goldfish', () => {
@@ -18,6 +18,11 @@ const EndCell = 8;
     var values = [];  //
     
     cy.task('google', {apiKey: apiKey, spreadSheetID: spreadSheetID, range: range }, {log: false}).then((res) => {  
+      Cypress.on('uncaught:exception', (err, runnable) => {
+        // returning false here prevents Cypress from failing the test
+        return false
+      })
+
       cy.visit('https://www.mtggoldfish.com/') // visit MTGgoldfish
       cy.wait(2000)
       
