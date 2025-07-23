@@ -6,9 +6,9 @@ describe('template spec', () => {
 */
 
 const StartCell = 2;  //sheet starts at 2
-const EndCell = 5;
+const EndCell = 7;
 
-  it.only ('FTF Buylist Check', () => {
+  it ('FTF Buylist Check', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
     const range = "BuylistCheck!"  + "B" + StartCell + ":" + "B" + EndCell;    ;  //sets the range param to a specific card
@@ -24,23 +24,26 @@ const EndCell = 5;
       })
       
       cy.viewport(1080, 1080)  //sets screensize of test
-      cy.visit('https://buylist.facetofacegames.com/') // visit 401games
-      cy.wait(5000)
-      
+      cy.visit('https://facetofacegames.com/pages/sell-your-cards') // visit ftf
+      cy.wait(2500)
+      cy.get('#Slide-template--24472504369524__logo_bar_CKX8R8-1 > .focus-inset > .bb-logo-img > .logo-bar__image') //find n click mtg
+        .click()
+      cy.wait(2500)
+
       for ( const TargetCard of res.data.values){  
         cy.log(`${TargetCard}`);  //prints card name in console
         
-        cy.get('.navPages-quickSearch > .form > .form-fieldset > .form-field > #search_query') //get the search field 
+        cy.get('.bb-search-input > input') //get the search field 
           .clear()
           .type(String(TargetCard))  //types the card we're looking for
-          cy.get('.navPages-quickSearch > .form > .form-fieldset > .form-field > button')  //find and click the search box
+          cy.get('.bb-search-input > button')  //find and click the search box
           .click()
 
         cy.wait(9000)
         
 
           //if clicked card has the correct name add price & URL to list
-          cy.get(':nth-child(1) > .card > .card-text > .card-addtoCart > .card-price > .primary-price--withoutTax > .price').then(($span) => {  //have to use this because you can't assign any cy.commands to vars
+          cy.get(':nth-child(2) > .bb-card-img > a > img').then(($span) => {  //have to use this because you can't assign any cy.commands to vars
             values.prices.push([$span.text()]);  //adds the urls to the let values array delcared above
             cy.log(`${values.prices}`);  //prints card price in console
           })
@@ -66,7 +69,7 @@ const EndCell = 5;
 
   })
 
-  it  ('Log URLs from FtF', () => {
+  it.only  ('Log URLs from FtF', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
     const range = "MainSheet!B" + StartCell + ":B" + EndCell;  //sets the range param to a specific card

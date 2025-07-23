@@ -6,7 +6,7 @@ describe('template spec', () => {
 */
 
 const StartCell = 2;  //sheet starts at 2
-const EndCell = 40;
+const EndCell = 14;
 
 
   it.only  ('Log URLs from Goldfish', () => {

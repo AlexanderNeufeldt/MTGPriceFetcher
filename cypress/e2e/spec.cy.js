@@ -6,7 +6,7 @@ describe('template spec', () => {
 */
 
 const StartCell = 2;  //sheet starts at 2
-const EndCell = 2;
+const EndCell = 29;
 
   it ('PRINTS CARD QUANTITY & NAME', () => {
     
@@ -34,7 +34,7 @@ const EndCell = 2;
     
   })
 
-  it ('Log URLs from 401g', () => {
+  it   ('Log URLs from 401g', () => {
     const apiKey = Cypress.env('SheetAPIKey');  //sets API_KEY to the hidden APIKey in cyrpess.env.json
     const spreadSheetID = Cypress.env('SpreadSheetID');  //sets API_KEY to the hidden APIKey & spreadSheetID to hidden SpreadSheetID in cypress.env.json
     const range = "MainSheet!"  + "B" + StartCell + ":" + "D" + EndCell;    ;  //sets the range param to multiple columns
