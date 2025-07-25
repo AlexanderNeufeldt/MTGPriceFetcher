@@ -3,6 +3,7 @@ const { defineConfig } = require("cypress");
 const { google } = require('googleapis');
 
 
+
 module.exports = defineConfig({
   // setupNodeEvents can be defined in either the e2e or component configuration
   
@@ -12,8 +13,12 @@ module.exports = defineConfig({
 
   numTestsKeptInMemory: 0,  //trying to reduce RAM crashes
   experimentalMemoryManagement: true, //might make Chrome use less RAM
+
+
   
   e2e: {
+
+    
     setupNodeEvents(on, config) {
       on('task', {    
         
